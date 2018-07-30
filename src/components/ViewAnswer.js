@@ -4,10 +4,13 @@ import './ViewCard.css'
 const viewanswer = (props) => {
   return (
     <div>
-      <p onClick = {props.click}>Answer </p>
+      <p>Answer </p>
 
-      <p>{props.answer}</p>
+      <p onClick = {props.click}>{props.answer}</p>
+
       <p>{props.children}</p>
+      <input type="text"
+      onChange = {props.changed} />
     </div>
   )
 }

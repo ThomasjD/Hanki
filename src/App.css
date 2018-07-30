@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  color: blue;
+  background-color: #EAF2F8;
 }
 
 .App-logo {
@@ -25,4 +27,23 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+
+.Style1  {
+  background-color: #E8DAEF;
+  font: inherit;
+  border: 5px solid #E59866;
+  margin: 2px;
+  padding: 6px;
+  cursor: pointer
+}
+
+.RealAnswer {
+  background-color: #FCF3CF;
+  font: inherit;
+  border: 5px solid #E59866;
+  padding: 6px;
+  margin: auto 20px;
+  cursor: pointer
 }

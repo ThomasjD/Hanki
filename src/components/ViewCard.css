@@ -1,22 +1,22 @@
+
 .ViewAnswer {
-  width: 40%;
+  width: 100%;
   background-color:#ECF7DB;
-  margin: auto;
-  border: 3px solid #F4AE27;
+  margin: 0;
+  border: 3px solid red ;
   box-shadow: 0 2px 3px #ccc;
-  padding: 30px 8px;
+  padding: 80px 20px;
   text-align: center;
 
 }
 
 
 .ViewQuestion{
-  width: 40%;
+  width: 100%;
   background-color:#B2E4F1;
-  margin: auto;
-  border: 3px solid #F4AE27;
+  margin: 0;
+  border: 3px solid red;
   box-shadow: 0 2px 3px #ccc;
-  padding: 30px 8px;
+  padding: 80px 20px;
   text-align: center;
-
 }

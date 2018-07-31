@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 import './App.css'
-import ViewQuestion from './components/ViewQuestion'
-import ViewAnswer from './components/ViewAnswer'
+import BasicCard from './components/BasicCard'
+
 
 
 
@@ -13,8 +13,8 @@ class App extends Component {
         cards: [
             {question: "What is a js object?",
             answer: "Anything you want it to be baby!"},
-            {question: "2 arguments reducer() takes in?",
-            answer: "1. value from previous/initial 2. callback()"}
+            /*{question: "2 arguments reducer() takes in?",
+            answer: "1. value from previous/initial 2. callback()"}*/
           ],
          showCard: false
        }
@@ -73,16 +73,16 @@ deleteCardHandler = () => {
     if(this.state.showCard) {
       flashcards =  (
       ///=== true ?
-      <div>
+      <div className = "Basic">
        {this.state.cards.map((card, index)=> {
          let rendercontent =
           (
-           <div>
+           <div >
 
-             <ViewQuestion
+             <BasicCard
                question = {card.question}
                click={this.deleteCardHandler}>
-             </ViewQuestion>
+             </BasicCard>
 
              <button
                className = 'Style1'
@@ -93,11 +93,11 @@ deleteCardHandler = () => {
              <p>--------------------------------</p>
              <br/>
 
-             <ViewAnswer
+             <BasicCard
                answer = {card.answer}
                click={this.deleteCardHandler}>>Delete Question
                changed = {this.realQuestionHandlerInput}>this input will change
-             </ViewAnswer>
+             </BasicCard>
 
            <br/>
            <p>********************************</p>

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import './App.css'
 import BasicCard from './components/BasicCard'
-
+import NavBar from './components/NavBar'
+import DeckList from './components/DeckList'
 
 
 
@@ -10,14 +11,30 @@ class App extends Component {
 
 
   state = {
-        cards: [
-            {question: "What is a js object?",
-            answer: "Anything you want it to be baby!"},
-            /*{question: "2 arguments reducer() takes in?",
-            answer: "1. value from previous/initial 2. callback()"}*/
+    decks:
+      {
+        rock:
+          [
+            {question: "encomiable?", answer: "praisworthy"},
+            {question: "viciado?", answer: "foul, unbreathable"}
           ],
-         showCard: false
+        verb:
+          [
+            {question: "imponerse?", answer: "prevail, win"},
+            {question: "precariedad?", answer: "uncertainty"}
+          ]
+        },
+    cards:
+      [
+          {deck: "adj", question: "encomiable?", answer: "praisworthy"},
+          {deck: "adj", question: "viciado?", answer: "foul, unbreathable"},
+          {deck: "verbs", question: "imponerse?", answer: "prevail, win"},
+          {deck: "verbs", question: "precariedad?", answer: "uncertainty"}
+      ],
+     showCard: false,
+     showDecks: false
        }
+
 
   //realQuestionHandler = (event) => {
   realQuestionHandler = (newshit) => {
@@ -63,13 +80,39 @@ class App extends Component {
 
   }
 
+  toggleShowDecks = () => {
+    const doesShowDecks = this.state.showDecks
+    this.setState({showDecks: !doesShowDecks})
+  }
+
 deleteCardHandler = () => {
 
 }
-
+      //{this.state.decks.map((deck, index) => {
   render() {
     let flashcards = null
+    let decks = null
 
+    if (this.state.showDecks) {
+      decks = (
+        <div className = "Basic">
+        <h2> Deck List</h2>
+
+        {Object.keys(this.state.decks).map((deckname) => {
+          let rendercontent =
+          (
+
+            <div>
+              <DeckList deck = {deckname}>
+              </DeckList>
+            </div>
+
+          )
+          return rendercontent
+        })}
+        </div>
+      )
+}
     if(this.state.showCard) {
       flashcards =  (
       ///=== true ?
@@ -167,11 +210,31 @@ deleteCardHandler = () => {
 
     return (
       <div className = "App">
+      <div >
+        <button className= "Navbar" onClick = {this.toggleShowDecks}>Show Decks
+        </button>
+
+        <button className= "Navbar" onClick = {this.toggleShowEditCard}>Add
+        </button>
+
+        <button className= "Navbar">Search
+        </button>
+
+        <button className= "Navbar" onClick = {this.toggleShowLogOut}> Logout
+        </button>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+        <h1 className>Hello I am outside of component</h1>
 
         <button onClick = {this.toggleShowCard}>Show Card</button>
         <br/>
-
+        {decks}
         {flashcards}
+
+
+
           <button className="Style1"
                   onClick = {this.switchQuestionHandler}>Go Back
           </button>
@@ -183,6 +246,7 @@ deleteCardHandler = () => {
           <button className = "Style1"
                   onClick = {this.switchQuestionHandler}>Next Card
            </button>
+
 
       </div>
       )

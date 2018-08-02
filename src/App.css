@@ -29,14 +29,16 @@
   to { transform: rotate(360deg); }
 }
 
-/*
+
 .Style1  {
   background-color: #E8DAEF;
   font: inherit;
   border: 5px solid #E59866;
   margin: 2px;
   padding: 6px;
-  cursor: pointer
+  cursor: pointer;
+  text-align: center;
+  float: center;
 }
 
 .RealAnswer {
@@ -45,15 +47,25 @@
   border: 5px solid #E59866;
   padding: 6px;
   margin: auto 20px;
-  cursor: pointer
+  cursor: pointer;
+
 }
-*/
+
 
 .Basic {
-  width: 30%;
+  width: 50%;
   height: 60%;
   margin: auto;
   background-color: #EAF2F8;
-  padding: 100px;
+  padding: 5px;
   border: 10px solid #E59866;
+}
+
+.Navbar {
+  background-color: #adccff;
+  font: inherit;
+  border: 2px solid #dee5ef;
+  margin: 5px;
+  padding: 10px;
+  float: right;
 }

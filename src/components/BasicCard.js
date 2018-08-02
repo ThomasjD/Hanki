@@ -5,10 +5,9 @@ const viewcard = (props) => {
   return(
     <div>
       <div className = 'ViewQuestion'>
-
-          <p onClick = {props.click}> Question </p>
-          <p onClick = {props.click} >{props.question}</p>
-
+          <h2>Hi this is Thomas</h2>
+          <p onClick = {props.click}>Question</p>
+          <p onClick = {props.click}>{props.question}</p>
           <p>{props.children}</p>
 
       </div>

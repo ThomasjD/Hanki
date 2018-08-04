@@ -53,9 +53,9 @@
 
 
 .Basic {
-  width: 50%;
-  height: 60%;
-  margin: auto;
+  width: 100%;
+  height: 80%;
+  margin: 20px auto;
   background-color: #EAF2F8;
   padding: 5px;
   border: 10px solid #E59866;

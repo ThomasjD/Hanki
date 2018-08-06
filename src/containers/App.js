@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
 
 import './App.css'
-import BasicCard from '../components/BasicCards/BasicCards/BasicCard/BasicCard'
+import BasicCard from '../components/BasicCards/BasicCard/BasicCard'
 import BasicCards from '../components/BasicCards/BasicCards'
-import NavBar from './components/NavBar'
+//import Navbar from '../components/NavBar'
 import DeckList from '../components/DeckList'
 import UserProfile from '../components/UserProfile'
-
+import ReviewDeck from '../components/ReviewDeck'
 
 class App extends Component {
-/*[
-  rock: [
-    {}
-    {}
-  ]
 
-
-]*/
 
   state = {
     username: "Thomas",
@@ -40,12 +33,14 @@ class App extends Component {
           {deck: "verbs", id: "1343", question: "imponerse?", answer: "prevail, win"},
           {deck: "verbs", id: "1123",question: "precariedad?", answer: "uncertainty"}
       ],
-     showCard: false,
+     showCards: false,
      showDecks: false,
      showReviewDeck:false,
      showEditQuestion: false,
      showEditAnswer: false,
-     reviewDeckName: 'notathing'
+     reviewDeckName: '',
+     reviewcardIndex: null,
+     currentdeck: null
        }
 
 
@@ -54,10 +49,12 @@ class App extends Component {
     const doesShow = this.state.showEditQuestion
     this.setState({showEditQuestion: !doesShow})
   }
+
   triggerAnswerHandler = () => {
     const doesShow = this.state.showEditAnswer
     this.setState({showEditAnswer: !doesShow})
   }
+
   editQuestionHandler = (event, id) => {
     const cardIndex = this.state.cards.findIndex( p => {
       return p.id === id
@@ -88,11 +85,9 @@ class App extends Component {
       this.setState({cards: cards})
   }
 
-
-
   toggleShowEditCard = () => {
-    const doesShow = this.state.showCard
-    this.setState({showCard: !doesShow})
+    const doesShow = this.state.showCards
+    this.setState({showCards: !doesShow})
 
   }
 
@@ -105,15 +100,56 @@ class App extends Component {
     this.setState({reviewDeckName: deckname})
     const doesShowReviewDeck = this.state.showReviewDeck
     this.setState({showReviewDeck: !doesShowReviewDeck})
-
   }
-  handleBtnShowReviewDeck = ((reviewdeck)=>{
-    this.props.toggleReviewDeck(reviewdeck)
 
-  })
-
-  deleteCardHandler = () => {
+  toggleShowCards = () => {
+    const doesShowCards = this.state.showCards
+    this.setState({showCards: !doesShowCards})
   }
+
+
+
+  handleBtnShowReviewDeck = (reviewdeck)=>{
+    //this.toggleReviewDeck(reviewdeck)
+    console.log(reviewdeck)
+    console.log(this.state.decks[reviewdeck])
+    console.log(this.state.decks[reviewdeck].length)
+    let decklength = this.state.decks[reviewdeck].length
+    let randomIndex = Math.floor(Math.random() * decklength)
+    console.log('random index is ')
+    console.log(randomIndex)
+    this.setState({currentdeck: reviewdeck})
+    this.setState({reviewDeckName: reviewdeck})
+    this.setState({reviewcardIndex: randomIndex})
+    const doesShowCards = this.state.showReviewDeck
+    this.setState({showReviewDeck: !doesShowCards})
+      // console.log(randomIndex)
+  }
+  nextCardHandler = () => {
+    console.log('inside nextCardHandler')
+    const doesShowCards = this.state.showReviewDeck
+    this.setState({showReviewDeck: !doesShowCards})
+    let randomIndex = this.state.reviewcardIndex + 1
+    this.setState({reviewcardIndex: randomIndex})
+  }
+  // let currentCards = this.decks[reviewdeck]
+  // var randomIndex = Math.floor(Math.random() * currentCards.length);
+  // console.log(randomIndex)
+  // var card = currentCards[randomIndex];
+  // if(card === this.state.currentCard){
+  //   this.getRandomCard(currentCards)
+  // }
+  // return(card);
+
+
+
+  deleteCardHandler = (cardIndex) => {
+
+    const cards = [...this.state.cards]
+    cards.splice(cardIndex, 1)
+    this.setState({cards: cards})
+  }
+
 
   render() {
     let flashcards = null
@@ -121,20 +157,34 @@ class App extends Component {
     let reviewdeck = null
     let editcard = null
 
+
+    if (this.state.showReviewDeck){
+      flashcards =
+          <ReviewDeck
+          question = {this.state.decks[this.state.reviewDeckName][this.state.reviewcardIndex].question}
+          answer = {this.state.decks[this.state.reviewDeckName][this.state.reviewcardIndex].answer}
+          next = {this.nextCardHandler}
+
+          />
+      }
+
+
     if (this.state.showDecks) {
       decks = (
         <div className = "Basic">
         <h2> Deck List</h2>
 
         {Object.keys(this.state.decks).map((deckname, index) => {
+          console.log(deckname)
+          console.log(index)
+
           let rendercontent =
           (
               <DeckList
                 index = {index}
                 deck = {deckname}
-                click = {(event) => this.toggleReviewDeck(event, index)}>
-              </DeckList>
-
+                click = {this.handleBtnShowReviewDeck}
+                />
 
           )
           return rendercontent
@@ -143,99 +193,54 @@ class App extends Component {
       )
       }
 
-    if(this.state.toggleReviewDeck) {
-      reviewdeck =  (
-        <div>
-          <div className = 'Basic'>
 
-            <BasicCard
-              question = {this.state.decks.reviewDeckName[0].question}
-              answer = {this.state.decks.reviewDeckName[0].answer}>
-            </BasicCard>
-          </div>
-        </div>
-        )
-      }
 
-    if(this.state.showCard) {
-      flashcards =  (
-        <div>
+    if(this.state.showCards) {
+      flashcards =
           <BasicCards
           cards = {this.state.cards}
-          clicked = {this.deletePersonHandler}
-          changedQuestion = (event) =>{this.editQuestionHandler(event, card.id)}
-          changedAnswer = (event) =>{this.editAnswerHandler(event, card.id)}/>
-        </div>
-        )
+          clicked = {this.deleteCardHandler}
+          questionEdited = {this.editQuestionHandler}
+          AnswerEdited = {this.editAnswerHandler}/>
       }
-        /*
-        <div className = "Basic">
-         {this.state.cards.map((card, index)=> {
-           let rendercontent =
-            (
-             <div >
-               <BasicCard
-                 key = {card.id}
-                 answer = {card.answer}
-                 question = {card.question}
-                 changedQuestion={(event) => this.editQuestionHandler(event, card.id)}
-                 changedAnswer={(event) => this.editAnswerHandler(event, card.id)}>
-               </BasicCard>
-
-
-
-               <button>Edit Question</button>
-               <button type="input">Edit Answer</button>
-             </div>
-             return rendercontent
-
-           })}
-           </div>
-             */
-
-
-
-
 
 
     return (
       <div className = "App">
+
       <div>
-        <button className= "Navbar" onClick = {this.toggleShowDecks}>Show Decks
+        <button className= "Navbar"
+          onClick = {this.toggleShowDecks}>Show Decks
         </button>
 
-        <button className= "Navbar" onClick = {this.toggleShowCards}>Show Cards
+        <button className= "Navbar"
+          onClick = {this.toggleShowCards}>Show Cards
         </button>
 
-        <button className= "Navbar" onClick = {this.toggleShowEditCard}>Edit Cards</button>
+        <button className= "Navbar"
+          onClick = {this.showEditCard}>Edit Cards</button>
 
-        <button className= "Navbar">Review Cards
-        </button>
-
-        <button className= "Navbar" onClick = {this.toggleShowLogOut}> Logout
-        </button>
+        <button className= "Navbar"
+          onClick = {this.toggleShowEditCard}>Review Cards
+      </button>
       </div>
+
+
+
+
       <br/>
       <br/>
-      <UserProfile username = {this.state.username}></UserProfile>
+      <UserProfile
+        username = {this.state.username}></UserProfile>
       <br/>
         <h1>Edit Question or Answer in input box</h1>
-
 
         <br/>
         {decks}
         {flashcards}
         {reviewdeck}
 
-          <button className="Style1">Go Back
-          </button>
 
-          <button className="RealAnswer"
-                  onClick  = {() => this.editQuestionHandler('inmunda')}>Edit question
-          </button>
-
-          <button className = "Style1">Next Card
-           </button>
 
 
       </div>

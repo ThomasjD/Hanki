@@ -15,15 +15,21 @@ class App extends Component {
     username: "Thomas",
     decks:
       {
-        rock:
+        adj:
           [
+            {id: "2342", question: "efusivo", answer: "effusive, warm, affectionate"},
             {id: "2523", question: "encomiable?", answer: "praisworthy"},
-            {id: "3523", question: "viciado?", answer: "foul, unbreathable"}
+            {id: "3523", question: "viciado?", answer: "foul, unbreathable"},
+            {id: "3333", question: "asfixiante", answer: "stiffling, suffocating"},
+            {id: "2423", question: "metomentodo", answer: "nosy, ghossipy"}
           ],
         verb:
           [
             {id: "1343", question: "imponerse?", answer: "prevail, win"},
-            {id: "1123", question: "precariedad?", answer: "uncertainty"}
+            {id: "1123", question: "precariedad?", answer: "uncertainty"},
+            {id: "2433", question: "ponerselo de corbata", answer: "to get somebody razzaled"},
+            {id: "3332", question: "marcar a fuego", answer: "written in stone"},
+            {id: "2341", question: "me/te/le/nos/os/vos la suda", answer: "I, you, he, we don't give a fuck!"},
           ]
         },
     cards:
@@ -32,6 +38,7 @@ class App extends Component {
           {deck: "adj", id: "3523", question: "viciado?", answer: "foul, unbreathable"},
           {deck: "verbs", id: "1343", question: "imponerse?", answer: "prevail, win"},
           {deck: "verbs", id: "1123",question: "precariedad?", answer: "uncertainty"}
+
       ],
      showCards: false,
      showDecks: false,
@@ -121,16 +128,26 @@ class App extends Component {
     this.setState({currentdeck: reviewdeck})
     this.setState({reviewDeckName: reviewdeck})
     this.setState({reviewcardIndex: randomIndex})
+
     const doesShowCards = this.state.showReviewDeck
+    let doesShowCards2 = this.state.showReviewDeck.toString()
+    console.log(`This is doesShowDeck ${doesShowCards2}`)
     this.setState({showReviewDeck: !doesShowCards})
       // console.log(randomIndex)
   }
   nextCardHandler = () => {
     console.log('inside nextCardHandler')
+    console.log('this.state.doesShowDeck')
+
     const doesShowCards = this.state.showReviewDeck
+    let doesShowCards2 = this.state.showReviewDeck.toString()
+    console.log(`This is doesShowDeck ${doesShowCards2}`)
     this.setState({showReviewDeck: !doesShowCards})
+    console.log(`this is showReviewDeck ${this.state.showReviewDeck}`)
     let randomIndex = this.state.reviewcardIndex + 1
+    console.log(`this is randomIndex ${randomIndex}`)
     this.setState({reviewcardIndex: randomIndex})
+    console.log(`this is reviewcardIndex ${this.state.reviewcardIndex}`)
   }
   // let currentCards = this.decks[reviewdeck]
   // var randomIndex = Math.floor(Math.random() * currentCards.length);
@@ -161,11 +178,10 @@ class App extends Component {
     if (this.state.showReviewDeck){
       flashcards =
           <ReviewDeck
+          deck = {this.state.reviewDeckName}
           question = {this.state.decks[this.state.reviewDeckName][this.state.reviewcardIndex].question}
           answer = {this.state.decks[this.state.reviewDeckName][this.state.reviewcardIndex].answer}
-          next = {this.nextCardHandler}
-
-          />
+          next = {this.handleBtnShowReviewDeck}/>
       }
 
 
@@ -198,10 +214,10 @@ class App extends Component {
     if(this.state.showCards) {
       flashcards =
           <BasicCards
-          cards = {this.state.cards}
-          clicked = {this.deleteCardHandler}
-          questionEdited = {this.editQuestionHandler}
-          AnswerEdited = {this.editAnswerHandler}/>
+            cards = {this.state.cards}
+            clicked = {this.deleteCardHandler}
+            questionEdited = {this.editQuestionHandler}
+            AnswerEdited = {this.editAnswerHandler}/>
       }
 
 
@@ -214,11 +230,11 @@ class App extends Component {
         </button>
 
         <button className= "Navbar"
-          onClick = {this.toggleShowCards}>Show Cards
+          onClick = {this.toggleShowCards}>Edit Cards
         </button>
 
         <button className= "Navbar"
-          onClick = {this.showEditCard}>Edit Cards</button>
+          onClick = {this.showEditCard}>Extra</button>
 
         <button className= "Navbar"
           onClick = {this.toggleShowEditCard}>Review Cards

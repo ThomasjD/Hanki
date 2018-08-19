@@ -18,9 +18,11 @@ const viewcard = (props) => {
           <p>{props.answer}</p>
             <p>{props.children}</p>
         </div>
-        <button onClick ={props.next}>Next Card</button>
+        <button onClick = {() => props.next(props.deck)}>Next Card</button>
+
         <button onClick= {props.back}>Go Back</button>
       </div>
       )
+
   }
 export default viewcard
